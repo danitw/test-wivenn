@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -43,4 +44,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+     /**
+     * The reports that belong to the user.
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function reports():BelongsToMany
+    {
+        return $this->belongsToMany(Report::class, 'reportsColaborators', 'userId', 'reportId');
+    }
 }
