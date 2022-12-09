@@ -23,12 +23,5 @@ class AdminSeeder extends Seeder
           'isAdmin' => true,
           'entryDate' => Carbon::now()
         ]);
-        //User::factory()->create([
-        //'username' => 'admin',
-        //'email' => 'admin@admin.com',
-        //'password' => Hash::make('123456789'),
-        //'isAdmin' => true,
-        //'entryDate' => Carbon::now()
-        //]);
     }
 }
