@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as Controller;
 
-
 class BaseController extends Controller
 {
-
     public function handleResponse($result, $msg)
     {
-    	$res = [
+        $res = [
             'success' => true,
             'data'    => $result,
             'message' => $msg,
@@ -21,11 +19,11 @@ class BaseController extends Controller
 
     public function handleError($error, $errorMsg = [], $code = 404)
     {
-    	$res = [
+        $res = [
             'success' => false,
             'message' => $error,
         ];
-        if(!empty($errorMsg)){
+        if (!empty($errorMsg)) {
             $res['data'] = $errorMsg;
         }
         return response()->json($res, $code);

@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -45,11 +47,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-     /**
-     * The reports that belong to the user.
-     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function reports():BelongsToMany
+    /**
+    * The reports that belong to the user.
+    * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
+    public function reports(): BelongsToMany
     {
         return $this->belongsToMany(Report::class, 'reportsColaborators', 'userId', 'reportId');
     }

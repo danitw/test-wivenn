@@ -8,21 +8,22 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Report extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $fillable = [
-    'title',
-    'summary',
-    'creatorID',
-    'fileInServer'
-  ];
+    protected $fillable = [
+      'title',
+      'summary',
+      'creatorID',
+      'fileInServer'
+    ];
 
     /**
      * Get the user associated with the report.
      *
      * @return Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function user():HasOne {
+    public function user(): HasOne
+    {
         return $this->hasOne(User::class, 'creatorID');
     }
 }

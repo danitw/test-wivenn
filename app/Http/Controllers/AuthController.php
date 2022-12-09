@@ -12,26 +12,27 @@ use App\Models\User;
 
 use Illuminate\Http\JsonResponse;
 
-
 class AuthController extends Controller
 {
     /**
      * Create User
      * @param Request $request
-     * @return User 
+     * @return User
      */
     public function register(Request $request): JsonResponse
     {
         try {
             //Validated
-            $validateUser = Validator::make($request->all(), 
-            [
-                'username' => 'required',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|min:8|max:32',
-            ]);
+            $validateUser = Validator::make(
+                $request->all(),
+                [
+                    'username' => 'required',
+                    'email' => 'required|email|unique:users,email',
+                    'password' => 'required|min:8|max:32',
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -44,7 +45,7 @@ class AuthController extends Controller
                 'email' => $request->email,
                 //'password' => $request->password,
                 'password' => Hash::make($request->password),
-                'isAdmin' => $request->isAdmin,
+                'isAdmin' => $request->isAdmin | false,
                 'entryDate' => Carbon::now()
 
             ]);
@@ -54,7 +55,6 @@ class AuthController extends Controller
                 'message' => 'User Created Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -71,13 +71,15 @@ class AuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         try {
-            $validateUser = Validator::make($request->all(), 
-            [
-                'email' => 'required|email',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                $request->all(),
+                [
+                    'email' => 'required|email',
+                    'password' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -85,7 +87,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            if(!Auth::attempt($request->only(['email', 'password']))){
+            if (!Auth::attempt($request->only(['email', 'password']))) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Email & Password does not match with our record.',
@@ -93,14 +95,13 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
-//return [$user->password];
+            //return [$user->password];
 
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -116,20 +117,25 @@ class AuthController extends Controller
      */
     public function logout(Request $request) // TODO: make this later, after of sanctum middleware
     {
-      //Auth::guard()->logout();
-      //Auth::logoutCurrentDevice();
-      //$request->user()->currentAccessToken()->delete();
-      //auth()->user()->tokens()->delete();
+        auth()->user()->tokens()->delete();
+
+        return [
+            'message' => 'Tokens Revoked'
+        ];
+        //Auth::guard()->logout();
+        //Auth::logoutCurrentDevice();
+        //$request->user()->currentAccessToken()->delete();
+        //auth()->user()->;
 
 
         //Auth::logout();
         ////dd(Auth::hasUser());
         ////Auth::
-     
+
         //$request->session()->invalidate();
-     
+
         //$request->session()->regenerateToken();
-     
+
         //return redirect('/');
     }
 }
