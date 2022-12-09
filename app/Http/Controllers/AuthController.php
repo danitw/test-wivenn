@@ -85,7 +85,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            if(!Auth::attempt(['email' => 'danidevpy@gmail.com', 'password' => '3123'])){
+            if(!Auth::attempt($request->only(['email', 'password']))){
                 return response()->json([
                     'status' => false,
                     'message' => 'Email & Password does not match with our record.',
@@ -107,5 +107,29 @@ class AuthController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request) // TODO: make this later, after of sanctum middleware
+    {
+      //Auth::guard()->logout();
+      //Auth::logoutCurrentDevice();
+      //$request->user()->currentAccessToken()->delete();
+      //auth()->user()->tokens()->delete();
+
+
+        //Auth::logout();
+        ////dd(Auth::hasUser());
+        ////Auth::
+     
+        //$request->session()->invalidate();
+     
+        //$request->session()->regenerateToken();
+     
+        //return redirect('/');
     }
 }
