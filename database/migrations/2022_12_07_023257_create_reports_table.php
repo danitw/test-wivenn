@@ -18,7 +18,7 @@ return new class () extends Migration {
             $table->text('summary');
             $table->foreignId('creatorID')->references('id')->on('users');
             $table->string('fileInServer');
-            //$table->timestamps();
+            $table->timestamps();
         });
     }
 

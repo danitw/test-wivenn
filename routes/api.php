@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
       Route::post('/user', [UserController::class, 'create']);
       Route::get('/user/{id}', [UserController::class, 'read']);
-      Route::put('/user/{id}', [UserController::class, 'update']);
       Route::delete('/user/{id}', [UserController::class, 'delete']);
+
+      Route::post('/report', [ReportController::class, 'create']);
+      Route::delete('/report/{id}', [ReportController::class, 'delete']);
     });
+    Route::put('/report/{id}', [ReportController::class, 'update']);
+    Route::put('/user/{id}', [UserController::class, 'update']);
 });
