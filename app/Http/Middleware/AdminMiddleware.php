@@ -18,7 +18,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!Auth::user()->isAdmin) {
-          return response()->json(['message' => 'user is not admin']);
+            return response()->json(['message' => 'user is not admin']);
         }
 
         return $next($request);

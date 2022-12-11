@@ -113,8 +113,8 @@ class UserController extends Controller
 
             $body = $request->all();
 
-            if($body['password']) {
-              $body['password'] = Hash::make($body['password']);
+            if ($body['password']) {
+                $body['password'] = Hash::make($body['password']);
             }
 
             User::where('id', $id)->update($body);
