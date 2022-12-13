@@ -52,7 +52,7 @@ abstract class TestCase extends BaseTestCase
             'title' => 'report-test',
             'summary' => 'summary test',
             'creatorID' => $creatorId,
-            'fileInServer' => 'archive.pdf' // TODO: make this later
+            'fileInServer' => 'archive.pdf'
         ]);
     }
 }

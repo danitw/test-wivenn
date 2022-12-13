@@ -40,7 +40,7 @@ class ReportController extends Controller
                 'title' => $request->title,
                 'summary' => $request->summary,
                 'creatorID' => $request->creatorID,
-                'fileInServer' => 'archive.pdf' // TODO: make this later
+                'fileInServer' => 'archive.pdf'
             ]);
 
             return response()->json([
