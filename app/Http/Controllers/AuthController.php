@@ -47,7 +47,6 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $request->email)->first();
-            //return [$user->password];
 
             return response()->json([
                 'status' => true,
@@ -67,7 +66,7 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function logout(Request $request) // TODO: make this later, after of sanctum middleware
+    public function logout(Request $request)
     {
         auth()->user()->tokens()->delete();
 
@@ -82,15 +81,15 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function forgotPassword(Request $request) // TODO: make this later, after of sanctum middleware
+    public function forgotPassword(Request $request)
     {
         $request->validate(['email' => 'required|email']);
 
         $user = Password::getUser(['email' => $request->email]);
 
-        $status = Password::createToken($user);
+        $token = Password::createToken($user);
 
-        return response()->json(['status' => $status]);
+        return response()->json(['token' => $token]);
     }
 
     /**
@@ -99,7 +98,7 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function resetPassword(Request $request): JsonResponse // TODO: make this later, after of sanctum middleware
+    public function resetPassword(Request $request): JsonResponse
     {
         $request->validate([
             'token' => 'required',
@@ -122,6 +121,6 @@ class AuthController extends Controller
 
         return $status === Password::PASSWORD_RESET
                     ? response()->json(['status' => 'Password modified with success'], 200)
-                    : response()->json(["status" => 'Password not modified'], 500);
+                    : response()->json(['status' => 'Password not modified'], 500);
     }
 }

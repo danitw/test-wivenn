@@ -47,7 +47,7 @@ class ReportController extends Controller
                 'status' => true,
                 'message' => 'Report Created Successfully',
                 'report' => $report
-            ], 200);
+            ], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,

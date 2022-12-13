@@ -22,11 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
 
 Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
 
-Route::post('/auth/reset-password',  [AuthController::class, 'resetPassword']);
+Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/me', function (Request $request) {
@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete('/report/{id}', [ReportController::class, 'delete']);
     });
 
+    Route::get('/report/{id}', [ReportController::class, 'read']);
     Route::put('/report/{id}', [ReportController::class, 'update']);
     Route::put('/user/{id}', [UserController::class, 'update']);
 });
